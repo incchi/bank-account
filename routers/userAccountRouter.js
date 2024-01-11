@@ -1,11 +1,11 @@
 const {Router} = require('express')
-const { createAccount, fetchAccount, updateBalance, deleteAccount } = require('../controller/userAccountController')
+const userAccountController = require('../controller/userAccountController')
 
 const router = Router()
 
-router.post("/createaccount",createAccount)
-router.get('/fetchdetails',fetchAccount)
-router.post('/updatebalance',updateBalance)
-router.post('/closeaccount',deleteAccount)
+router.post("/createaccount",userAccountController.createAccount)
+router.get('/fetchdetails',userAccountController.fetchAccount)
+router.post('/updatebalance',userAccountController.updateBalance)
+router.post('/closeaccount',userAccountController.deleteAccount)
 
 module.exports = router

@@ -2,16 +2,16 @@ const userAccountModel = require("../models/userAccountModel");
 
 const userAccountController = {
     createAccount : async(req,res)=>{
-        console.log("yhi");
         const {username,accountnumber,type,balance} = req.body;
-        await userAccountModel.create({
+        const userDB = await userAccountModel.create({
             name : username,
             number : accountnumber,
             type : type,
             balance : balance
-        }).save()
+        })
+        await userDB.save()
         
-        res.send("Account opened successfylly !\n Thanks for choosing us :)")
+        res.send("Account opened successfully !\n Thanks for choosing us :)")
     },
     fetchAccount : async(req,res)=>{
         const {accountnumber} = req.body;
