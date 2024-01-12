@@ -77,7 +77,7 @@ const userAccountController = {
                         as : "transections_details"
 
                     }}
-                ];
+                ]
                 const balancePipeline = [
                     {
                         $lookup : {
@@ -87,13 +87,13 @@ const userAccountController = {
                             as : "balance_details"
                         }
                     }
-                ];
+                ]
 
-                const userData =await userDB.aggregate(transectionPipeline,balancePipeline)
+                const userData =await userAccountModel.aggregate(transectionPipeline)
                 res.send(userData)
 
             }else res.send("invalid account number")
-            
+
         } catch (error) {
             console.log(error);
             res.send("internal server error")

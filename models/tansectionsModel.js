@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { nanoid } = require('nanoid')
+// const { nanoid } = require('nanoid')
 
 const transectionsSchema = new mongoose.Schema(
     {
@@ -9,7 +9,7 @@ const transectionsSchema = new mongoose.Schema(
         },
         transectionNumber : {
             type : String,
-            default : ()=> nanoid(10)
+            default : "()=> nanoid(10)"
         },
         type : {
             type : String,
