@@ -1,7 +1,8 @@
 const userAccountModel = require("../models/userAccountModel");
 const transectionsModel = require("../models/tansectionsModel");
-const balanceModel = require('../models/balanceModel')
-const changeBalance = require('../utils/changeBalance')
+const balanceModel = require('../models/balanceModel');
+const { changeBalance } = require("../utils/changeBalance");
+
 
 
 const userAccountController = {
@@ -54,10 +55,11 @@ const userAccountController = {
         try {
             const userDB = await userAccountModel.findOne({number:accountnumber});
             if(userDB){
-                await transectionsModel.findOneAndUpdate({accountNumber:accountnumber},{type:type});
-                if(await changeBalance(accountnumber,balance,type)) res.send("balance updated")
+                console.log("user");
+                  await transectionsModel.findOneAndUpdate({accountNumber:accountnumber},{type:type});
+                if(changeBalance(accountnumber,balance,type)) res.send("balance updated")
                 else res.send("balance update error")
-            }
+            }else res.send("invalid account number")
         } catch (error) {
             console.log(error);
             res.send("internal server error")

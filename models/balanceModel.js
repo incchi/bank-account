@@ -10,7 +10,7 @@ const balanceSchema = new mongoose.Schema (
             type : Number
         },
         log: {
-            type : String
+            type : Array 
         }
     }
 )
