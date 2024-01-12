@@ -1,7 +1,7 @@
 const userAccountModel = require("../models/userAccountModel");
 const transectionsModel = require("../models/tansectionsModel");
 const balanceModel = require('../models/balanceModel')
-const changeBalance = require('../utils/updateBalance')
+const changeBalance = require('../utils/changeBalance')
 
 
 const userAccountController = {
