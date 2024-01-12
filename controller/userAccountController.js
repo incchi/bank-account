@@ -1,7 +1,8 @@
 const userAccountModel = require("../models/userAccountModel");
 const transectionsModel = require("../models/tansectionsModel");
-const balanceModel = require('../models/balanceModel')
-const changeBalance = require('../utils/updateBalance')
+const balanceModel = require('../models/balanceModel');
+const { changeBalance } = require("../utils/changeBalance");
+
 
 
 const userAccountController = {
@@ -49,21 +50,28 @@ const userAccountController = {
     //     }else res.send("invalid account number")
     // },
 
+    // updateBalance : async(req,res)=>{
+    //     const {accountnumber,balance,type} = req.body;
+    //     try {
+    //         const userDB = await userAccountModel.findOne({number:accountnumber});
+    //         if(userDB){
+    //             await transectionsModel.findOneAndUpdate({accountNumber:accountnumber},{type:type});
+    //             if(changeBalance(accountnumber,balance,type)) res.send("balance updated")
+    //             else res.send("balance uptade error")
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //         res.send("internal server error")
+    //     }
+    // },
     updateBalance : async(req,res)=>{
-        const {accountnumber,balance,type} = req.body;
-        try {
-            const userDB = await userAccountModel.findOne({number:accountnumber});
-            if(userDB){
-                await transectionsModel.findOneAndUpdate({accountNumber:accountnumber},{type:type});
-                if(changeBalance(accountnumber,balance,type)) res.send("balance updated")
-                else res.send("balance uptade error")
-            }
-        } catch (error) {
-            console.log(error);
-            res.send("internal server error")
-        }
+        const {accountNumber,balance,type}=req.body;
+        const userDB = userAccountModel.findOne({number:accountNumber});
+        if(userDB){
+            if(changeBalance(accountNumber,balance,type)) res.send("balance updated")
+            else res.send("payment error")
+        }else res.send("invalid account number")
     },
-
     fetchAccount : async(req,res)=>{
         const {accountnumber} = req.body;
         try {
