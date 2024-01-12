@@ -55,8 +55,8 @@ const userAccountController = {
             const userDB = await userAccountModel.findOne({number:accountnumber});
             if(userDB){
                 await transectionsModel.findOneAndUpdate({accountNumber:accountnumber},{type:type});
-                if(changeBalance(accountnumber,balance,type)) res.send("balance updated")
-                else res.send("balance uptade error")
+                if(await changeBalance(accountnumber,balance,type)) res.send("balance updated")
+                else res.send("balance update error")
             }
         } catch (error) {
             console.log(error);
@@ -69,17 +69,9 @@ const userAccountController = {
         try {
             const userDB = await userAccountModel.findOne({number:accountnumber})
             if(userDB){
-                const transectionPipeline =[
-                    {$lookup : {
-                        from : 'transectionsmodels',
-                        localField : 'number',
-                        foreignField : 'accountNumber',
-                        as : "transections_details"
-
-                    }}
-                ]
-                const balancePipeline = [
-                    {
+                const balancePipeline = 
+                    { 
+                        
                         $lookup : {
                             from : "balancemodels",
                             localField : "number",
@@ -87,9 +79,20 @@ const userAccountController = {
                             as : "balance_details"
                         }
                     }
-                ]
+                
+                const transectionPipeline =[
+                    {$match : {number : accountnumber}},
+                    {$project: {_id:0}},
+                    {$lookup : {
+                        from : 'transectionsmodels',
+                        localField : 'number',
+                        foreignField : 'accountNumber',
+                        as : "transections_details"
 
-                const userData =await userAccountModel.aggregate(transectionPipeline)
+                    }},balancePipeline
+                ]
+                
+                const userData =await userAccountModel.aggregate(transectionPipeline,)
                 res.send(userData)
 
             }else res.send("invalid account number")
