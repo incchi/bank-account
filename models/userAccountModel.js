@@ -17,7 +17,7 @@ const userAccountSchema = new mongoose.Schema(
         },
         balance : {
             type : Number,
-            default : 0,
+            
         },
         transections : {
             type : Array,

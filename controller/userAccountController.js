@@ -1,4 +1,6 @@
 const userAccountModel = require("../models/userAccountModel");
+const transectionsModel = require("../models/tansectionsModel");
+const balanceModel = require('../models/balanceModel')
 
 const userAccountController = {
     createAccount : async(req,res)=>{
@@ -10,6 +12,21 @@ const userAccountController = {
             balance : balance
         })
         await userDB.save()
+
+        const newTransection = await transectionsModel.create({
+            accountNumber : accountnumber,
+            type  : "credit",
+            updateBalance : balance
+        })
+        await newTransection.save()
+
+        const newBalance = await balanceModel.create({
+            accountNumber:accountnumber,
+            updatedBalance : balance,
+            log : newTransection.type+balance
+        })
+        await newBalance.save()
+
         
         res.send("Account opened successfully !\n Thanks for choosing us :)")
     },
