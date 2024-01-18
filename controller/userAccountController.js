@@ -93,8 +93,32 @@ const userAccountController = {
 
                     }},balancePipeline
                 ]
+                // const combinedPipeline = [
+                //     { $match: { number: accountnumber } },
+                //     { $project: { _id: 0 } },
+                //     {
+                //         $facet: {
+                //             transections_details: [
+                //                 {
+                //                     $lookup: {
+                //                         from: 'transectionsmodels',
+                //                         localField: 'number',
+                //                         foreignField: 'accountNumber',
+                //                         as: 'transections_details',
+                //                     },
+                //                 },
+                //                 { $unwind: '$transections_details' },
+                //                 { $project: { 'transections_details._id': 0 } },
+                //             ],
+                //             balance_details:[ balancePipeline],
+                //         },
+                //     },
+                // ];
                 
-                const userData =await userAccountModel.aggregate(transectionPipeline,)
+                const userData =await userAccountModel.aggregate(transectionPipeline)
+                
+                
+                
                 res.send(userData)
 
             }else res.send("invalid account number")
